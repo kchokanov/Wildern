@@ -11,6 +11,7 @@
     "target": "ES2022",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
 }
