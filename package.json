@@ -1,0 +1,41 @@
+{
+  "name": "wilderns",
+  "version": "1.0.0",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "build": "tsc",
+    "buildClient": "cd client && npm run build && cd .. &&",
+    "lint": "npx eslint --fix && npx ts-standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kal",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.3.0",
+    "@tsconfig/node20": "^20.1.4",
+    "@tsconfig/recommended": "^1.0.6",
+    "@types/express": "^4.17.21",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "globals": "^15.2.0",
+    "html-webpack-plugin": "^5.6.0",
+    "ts-standard": "^12.0.2",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.9.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.4.0",
+    "tailwindcss": "^3.4.3"
+  },
+  "ts-standard": {
+    "project": "./tsconfig.json",
+    "ignore": [
+      "dist",
+      "src/**/*.js"
+    ]
+  },
+  "keywords": [],
+  "description": ""
+}
