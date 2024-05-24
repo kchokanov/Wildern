@@ -4,6 +4,7 @@ declare global {
       NODE_ENV: 'development' | 'production'
       PORT: string
       DB_URL: string
+      CARD_COLLECTION: string
     }
   }
 }

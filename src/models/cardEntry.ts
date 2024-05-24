@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 
+const collectionName = process.env.CARD_COLLECTION ?? ''
+
 const cardEntrySchema = new mongoose.Schema({
   name: String,
   effect: String,
@@ -22,9 +24,11 @@ const cardEntrySchema = new mongoose.Schema({
   valueAmount1: Number,
   valueAmount2: Number,
   valueAmount3: Number,
-  specialType1: String, // enum?
-  specialType2: String // enum?
 
+  specialType1: String, // enum?
+  specialType2: String, // enum?
+
+  img: String
 })
 
-module.exports = mongoose.model('cardCol', cardEntrySchema)
+export default mongoose.model(collectionName, cardEntrySchema)
