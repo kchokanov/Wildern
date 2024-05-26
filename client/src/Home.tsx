@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import {HStack, Text, VStack } from '@chakra-ui/react'
+import { HStack, Text, VStack } from '@chakra-ui/react'
 
 const Home: FC = () => {
   return (

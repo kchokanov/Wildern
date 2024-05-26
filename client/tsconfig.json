@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
-  "include": ["src/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules"],
   "lib": ["ES2022","DOM"],
 
@@ -11,9 +11,7 @@
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist",
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "allowImportingTsExtensions": true
+    "outDir": "dist",    
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   }
 }

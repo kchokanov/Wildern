@@ -1,8 +1,9 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 const path = require('path')
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.tsx',
   mode: 'development',
   module: {
     rules: [
@@ -39,6 +40,7 @@ module.exports = {
     historyApiFallback: true
   },
   plugins: [
+    new Dotenv(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, './public', 'index.html')
     })

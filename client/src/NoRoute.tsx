@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import {HStack, VStack, Text } from '@chakra-ui/react'
+import { HStack, VStack, Text } from '@chakra-ui/react'
 
 const NoRoute: FC = () => {
   return (

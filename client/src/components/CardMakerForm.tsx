@@ -1,21 +1,7 @@
 import React, { FC } from 'react'
-import axios from 'axios'
 import { Box, Text, Center, Button } from '@chakra-ui/react'
 
-async function saveCard(): Promise<void>{
-  axios('http://localhost:3000/api/savecard', {
-    method: "post",
-    data: {name: 'reactCard', _id: '6650619e62ba12950d888020'},
-    headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-  }})
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });}
+import { saveCard, getCard } from '../apiHandler'
 
 const CardMakerForm: FC = () => {
   return (
@@ -23,6 +9,7 @@ const CardMakerForm: FC = () => {
       <Center h='100%'>
         <Text>Form goes here</Text>
         <Button onClick={saveCard}>Save a card!</Button>
+        <Button onClick={getCard}>Get a card!</Button>
       </Center>
     </Box>
   )

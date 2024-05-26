@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Link as ReactRouterLink } from 'react-router-dom'
-import {Flex, Stack, Link as ChakraLink} from '@chakra-ui/react'
+import { Flex, Stack, Link as ChakraLink } from '@chakra-ui/react'
 
-const Header = ({ height }: HeaderProps) => {
+interface Props {
+  height: string
+}
+const Header: FC<Props> = ({ height }) => {
   return (
     <Flex w='100%' h={height} bg='gray.200'>
       <Stack spacing={4} direction='row' align='center' paddingLeft='30px'>
@@ -14,7 +17,4 @@ const Header = ({ height }: HeaderProps) => {
   )
 }
 
-export interface HeaderProps {
-  height: string
-}
 export default Header

@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import {Center, Wrap, WrapItem } from '@chakra-ui/react'
+import { Center, Wrap, WrapItem } from '@chakra-ui/react'
 
 import CardMakerForm from './components/CardMakerForm'
 import CardMakerPreview from './components/CardMakerPreview'
