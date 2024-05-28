@@ -5,7 +5,7 @@ import pluginReactConfig from 'eslint-plugin-react/configs/recommended.js'
 
 export default [
   { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
-  { languageOptions: { globals: globals.browser } },
+  { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReactConfig

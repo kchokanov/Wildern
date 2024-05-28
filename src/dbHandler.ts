@@ -2,11 +2,7 @@ import mongoose from 'mongoose'
 import express from 'express'
 
 // update or write new doc to DB based on model
-export function apiWrite (
-  model: typeof mongoose.Model,
-  req: express.Request,
-  res: express.Response
-): void {
+export function apiWrite (model: typeof mongoose.Model, req: express.Request, res: express.Response): void {
   if (req.body._id == null) {
     res.status(400).send('No id in request')
   }
@@ -26,18 +22,12 @@ export function apiWrite (
 }
 
 // fetches from DB by model and name if present in req, or id if not
-export function apiQuery (
-  model: typeof mongoose.Model,
-  req: express.Request,
-  res: express.Response
-): void {
-  if (req.query._id == null && req.query.name == null) {
-    res.status(400).send('No id or name in request')
+export function apiQuery (model: typeof mongoose.Model, req: express.Request, res: express.Response): void {
+  if (req.query.id == null) {
+    res.status(400).send('No id in request')
   }
   model
-    .findOne(
-      req.query.name != null ? { name: req.query.name } : { _id: req.query._id }
-    )
+    .findOne({ _id: req.query._id })
     .then((data) => {
       console.log(`Fetched data for ${String(data._id)}`)
       res.status(200).send(data)
@@ -48,10 +38,7 @@ export function apiQuery (
     })
 }
 
-export function apiFetchAll (
-  model: typeof mongoose.Model,
-  res: express.Response
-): void {
+export function apiFetchAll (model: typeof mongoose.Model, res: express.Response): void {
   model
     .find()
     .then((data) => {
@@ -63,5 +50,23 @@ export function apiFetchAll (
     .catch((err) => {
       console.error(err)
       res.status(500).send('Failed to fetch all')
+    })
+}
+
+export function apiFetchAllNames (model: typeof mongoose.Model, req: express.Request, res: express.Response): void {
+  if (req.query.name == null) {
+    res.status(400).send('No name in request')
+  }
+  model
+    .find(req.query.name !== '' ? { name: { $regex: req.query.name, $options: 'i' } } : {}).select('name')
+    .then((data) => {
+      console.log(
+        `Fetched names for model: ${model.collection.collectionName} with name: ${String(req.query.name)}`
+      )
+      res.status(200).send(data)
+    })
+    .catch((err) => {
+      console.error(err)
+      res.status(500).send('Failed to fetch names')
     })
 }

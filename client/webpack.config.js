@@ -8,7 +8,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|tsx|ts)$/,
+        test: /\.(js|tsx|ts)$/i,
         use: 'babel-loader',
         exclude: /node_modules/
       },
@@ -21,6 +21,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.tsx', '.ts']
+
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -45,4 +46,5 @@ module.exports = {
       template: path.join(__dirname, './public', 'index.html')
     })
   ]
+
 }

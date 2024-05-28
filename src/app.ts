@@ -5,7 +5,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import 'dotenv/config'
 
-import { apiQuery, apiWrite, apiFetchAll } from './dbHandler'
+import { apiQuery, apiWrite, apiFetchAll, apiFetchAllNames } from './dbHandler'
 import cardEntry from './models/cardEntry'
 import valueEntry from './models/valueEntry'
 
@@ -45,6 +45,9 @@ mongoose.connect(MONGODB_URL).then(() => {
   })
   app.get('/api/allvalue', (_req, res): void => {
     apiFetchAll(valueEntry, res)
+  })
+  app.get('/api/fetchcardnames', (req, res): void => {
+    apiFetchAllNames(cardEntry, req, res)
   })
 })
   .catch((err) => console.error(err))
