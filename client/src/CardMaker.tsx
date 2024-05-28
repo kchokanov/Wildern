@@ -1,24 +1,22 @@
-import React, { FC } from 'react'
-import { Center, Wrap, WrapItem } from '@chakra-ui/react'
+import React, { } from 'react'
+import { Wrap, WrapItem } from '@chakra-ui/react'
 
 import CardMakerForm from './components/CardMakerForm'
 import CardMakerPreview from './components/CardMakerPreview'
 
-const CardMaker: FC = () => {
-  return (
-    <Wrap w='100%' pt='2em'>
-      <WrapItem w='40%'>
-        <Center w='100%'>
+class CardMaker extends React.Component<{}> {
+  render (): React.JSX.Element {
+    return (
+      <Wrap w='100%' justify='center' pt='1rem' pb='1rem' spacing='2rem'>
+        <WrapItem alignContent='center'>
           <CardMakerPreview />
-        </Center>
-      </WrapItem>
-      <WrapItem w='59%'>
-        <Center w='100%'>
+        </WrapItem>
+        <WrapItem alignContent='center'>
           <CardMakerForm />
-        </Center>
-      </WrapItem>
-    </Wrap>
-  )
+        </WrapItem>
+      </Wrap>
+    )
+  }
 }
 
 export default CardMaker

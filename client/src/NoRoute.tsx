@@ -1,14 +1,14 @@
-import React, { FC } from 'react'
-import { HStack, VStack, Text } from '@chakra-ui/react'
+import React from 'react'
+import { Text, Center } from '@chakra-ui/react'
 
-const NoRoute: FC = () => {
-  return (
-    <HStack w='100%'>
-      <VStack w='100%'>
-        <Text>Wrong URL bud.</Text>
-      </VStack>
-    </HStack>
-  )
+class NoRoute extends React.Component<{}> {
+  render (): React.JSX.Element {
+    return (
+      <Center w='100%'>
+        <Text>No Route</Text>
+      </Center>
+    )
+  }
 }
 
 export default NoRoute

@@ -1,14 +1,14 @@
-import React, { FC } from 'react'
-import { HStack, VStack, Text } from '@chakra-ui/react'
+import React from 'react'
+import { Text, Center } from '@chakra-ui/react'
 
-const InProgress: FC = () => {
-  return (
-    <HStack w='100%'>
-      <VStack w='100%'>
+class InProgress extends React.Component<{}> {
+  render (): React.JSX.Element {
+    return (
+      <Center w='100%'>
         <Text>In Progress...</Text>
-      </VStack>
-    </HStack>
-  )
+      </Center>
+    )
+  }
 }
 
 export default InProgress

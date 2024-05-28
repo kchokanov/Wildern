@@ -1,23 +1,31 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 
 import Footer from './components/Footer'
 import Header from './components/Header'
 import RouteList from './RouteList'
 
-const HEADER_HEIGHT_PX: number = 50
-const FOOTER_HEIGHT_PX: number = 25
-
-const App: FC = () => {
-  return (
-    <Box w='100%'>
-      <Header height={`${HEADER_HEIGHT_PX}px`} />
-      <Flex w='100%' bg='red.100' minH={`calc(100vh - ${HEADER_HEIGHT_PX + FOOTER_HEIGHT_PX}px)`}>
-        <RouteList />
-      </Flex>
-      <Footer height={`${FOOTER_HEIGHT_PX}px`} />
-    </Box>
-  )
+interface State {
+  headerHeightPX: number
+  footerHeightPX: number
 }
 
+class App extends React.Component<{}, State> {
+  state: Readonly<State> = {
+    headerHeightPX: 50,
+    footerHeightPX: 25
+  }
+
+  render (): React.JSX.Element {
+    return (
+      <Box w='100%'>
+        <Header height={`${this.state.headerHeightPX}px`} />
+        <Flex w='100%' bg='#EEEBD0' textColor='#673C4F' minH={`calc(100vh - ${this.state.headerHeightPX + this.state.footerHeightPX}px)`}>
+          <RouteList />
+        </Flex>
+        <Footer height={`${this.state.footerHeightPX}px`} />
+      </Box>
+    )
+  }
+}
 export default App

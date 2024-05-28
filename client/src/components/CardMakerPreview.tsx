@@ -1,14 +1,16 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Box, Text, Center } from '@chakra-ui/react'
 
-const CardMakerPreview: FC = () => {
-  return (
-    <Box bg='green.200' minW='35vw' minH='40vw'>
-      <Center h='100%'>
-        <Text>Canvas</Text>
-      </Center>
-    </Box>
-  )
+class CardMakerPreview extends React.Component<{}> {
+  render (): React.JSX.Element {
+    return (
+      <Box bg='#C99DA3' textColor='#EEEBD0' minW='30rem' minH='40rem'>
+        <Center h='100%'>
+          <Text>canvas</Text>
+        </Center>
+      </Box>
+    )
+  }
 }
 
 export default CardMakerPreview
