@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@chakra-ui/react'
+import { Box, Card, Center, Divider, HStack, Wrap, WrapItem } from '@chakra-ui/react'
 import CMFormCardLoadSeg from './CMFormCardLoadSeg'
 import CMFormCardTypeSeg from './CMFormCardTypeSeg'
 import CMFormCardSaveSeg from './CMFormSaveSeg'
@@ -15,12 +15,26 @@ interface Prop {
 class CardMakerForm extends React.Component<Prop> {
   render (): React.JSX.Element {
     return (
-      <Box bg='#C99DA3' textColor='#EEEBD0' minW='30rem'>
+      <Card bg='#C99DA3' textColor='#EEEBD0' p={5} w='100%'>
         <CMFormCardLoadSeg {...this.props} />
-        <CMFormCardTypeSeg />
-        <CMFormNameSeg {...this.props} />
+        <Divider pt={3} />
+        <Box pb={3} />
+        <Wrap justify='center' w='100%'>
+          <WrapItem pb={3}>
+            <HStack h='100%'>
+              <Center h='100%'>
+                <CMFormNameSeg {...this.props} />
+              </Center>
+            </HStack>
+          </WrapItem>
+          <WrapItem pb={3}>
+            <CMFormCardTypeSeg {...this.props} />
+          </WrapItem>
+        </Wrap>
+        <Divider pt={3} />
+        <Box pb={3} />
         <CMFormCardSaveSeg {...this.props} />
-      </Box>
+      </Card>
     )
   }
 }

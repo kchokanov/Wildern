@@ -6,28 +6,28 @@ const cardEntrySchema = new mongoose.Schema({
   name: String,
   effect: String,
   quote: String,
-  cardType: String, // enums?
+  cardType: String,
   author: String,
   artAuthor: String,
   atk: Number,
   def: Number,
-
-  costType1: String, // enum?
-  costType2: String, // enum?
-  costType3: String, // enum?
+  costType1: String,
+  costType2: String,
+  costType3: String,
   costAmount1: Number,
   costAmount2: Number,
   costAmount3: Number,
-  valueType1: String, // enum?
-  valueType2: String, // enum?
-  valueType3: String, // enum?
+  valueType1: String,
+  valueType2: String,
+  valueType3: String,
   valueAmount1: Number,
   valueAmount2: Number,
   valueAmount3: Number,
-
-  specialType1: String, // enum?
-  specialType2: String, // enum?
-
+  isHandEff: Boolean,
+  isCycle: Boolean,
+  isMythic: Boolean,
+  isMyth: Boolean,
+  isContiniousPower: Boolean,
   img: String
 })
 

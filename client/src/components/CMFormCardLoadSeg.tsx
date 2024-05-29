@@ -1,52 +1,37 @@
-import { Box, Button, Divider, Flex, Input, InputGroup, Spacer } from '@chakra-ui/react'
-import axios from 'axios'
+import { Wrap, WrapItem } from '@chakra-ui/react'
 import React from 'react'
+import CMSearchBar from './CMSearchBar'
+import CMLoadJsonButton from './CMLoadJsonButton'
 
 interface Prop {
   setCardData: Function
 }
 
-interface State {
-  cardName: string
-  cardList: undefined
-}
-
 class CMFormCardLoadSeg extends React.Component<Prop> {
-  state: State = {
-    cardName: '',
-    cardList: undefined
-  }
+  loadFile (target: HTMLInputElement): void {
+    const reader = new FileReader()
 
-  updateCardList (searchName: string): void {
-    this.setState({ cardName: searchName })
-    axios.get(`${String(process.env.API_URL)}/api/fetchcardnames`, {
-      params: {
-        name: searchName
-      }
-    }).then(res =>
-      this.setState({ cardList: res.data })
+    reader.addEventListener('load', () =>
+      this.props.setCardData(JSON.parse(String(reader.result)))
     )
-      .catch(err => {
-        console.log(err)
-      })
-  }
 
-  componentDidMount (): void {
-    this.updateCardList(this.state.cardName)
+    reader.addEventListener('error', err =>
+      console.error(err)
+    )
+
+    reader.readAsText(target.files![0])
   }
 
   render (): React.JSX.Element {
     return (
-      <Box p={3}>
-        <Flex>
-          <InputGroup>
-            <Input placeholder='Search...' value={this.state.cardName} onChange={e => this.updateCardList(e.target.value)} />
-          </InputGroup>
-          <Spacer />
-          <Button>Load JSON</Button>
-        </Flex>
-        <Divider pt={3} />
-      </Box>
+      <Wrap w='100%' justify='center'>
+        <WrapItem pb={3}>
+          <CMSearchBar setCardData={this.props.setCardData} />
+        </WrapItem>
+        <WrapItem pt={2} pb={3} pl={10}>
+          <CMLoadJsonButton setCardData={this.props.setCardData} />
+        </WrapItem>
+      </Wrap>
     )
   }
 }

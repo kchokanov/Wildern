@@ -37,7 +37,7 @@ function saveCard (data: card): void {
 class CMFormCardSaveSeg extends React.Component<Prop> {
   render (): React.JSX.Element {
     return (
-      <Box p={3}>
+      <Box>
         <Flex>
           <Button onClick={() => saveCard(this.props.cardData)}>Save</Button>
           <Spacer />

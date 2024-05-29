@@ -39,7 +39,6 @@ mongoose.connect(MONGODB_URL).then(() => {
   app.get('/api/fetchcard', (req, res): void => {
     apiQuery(cardEntry, req, res)
   })
-
   app.get('/api/fetchvalue', (req, res): void => {
     apiQuery(valueEntry, req, res)
   })
