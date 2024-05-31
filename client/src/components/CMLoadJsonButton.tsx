@@ -20,6 +20,7 @@ class CMLoadJsonButton extends React.Component<Prop> {
   }
 
   render (): React.JSX.Element {
+    //TODO - how do I change this button!>!>!>!>!>!>
     return (
       <input
         type='file'

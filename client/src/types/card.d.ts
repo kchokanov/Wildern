@@ -9,18 +9,8 @@ declare global {
     atk: number | 0
     def: number | 0
 
-    costType1: string | undefined
-    costType2: string | undefined
-    costType3: string | undefined
-    costAmount1: number | 0
-    costAmount2: number | 0
-    costAmount3: number | 0
-    valueType1: string | undefined
-    valueType2: string | undefined
-    valueType3: string | undefined
-    valueAmount1: number | undefined
-    valueAmount2: number | undefined
-    valueAmount3: number | undefined
+    cost: [{type: string | '', amount: number | 0}]
+    value: [{type: string | '', amount: number | 0}]
 
     isHandEff: boolean
     isCycle: boolean
@@ -28,7 +18,7 @@ declare global {
     isMyth: boolean
     isContiniousPower: boolean
 
-    img: string | undefined
+    img: string | ''
     _id: string
   }
 }

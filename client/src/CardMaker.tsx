@@ -26,24 +26,14 @@ class CardMaker extends React.Component<{}, State> {
       artAuthor: '',
       atk: 0,
       def: 0,
-      costType1: undefined,
-      costType2: undefined,
-      costType3: undefined,
-      costAmount1: 0,
-      costAmount2: 0,
-      costAmount3: 0,
-      valueType1: undefined,
-      valueType2: undefined,
-      valueType3: undefined,
-      valueAmount1: undefined,
-      valueAmount2: undefined,
-      valueAmount3: undefined,
+      cost: [{type: '', amount: 0}],
+      value: [{type: '', amount: 0}],
       isHandEff: false,
       isCycle: false,
       isMythic: false,
       isMyth: false,
       isContiniousPower: false,
-      img: undefined,
+      img: '',
       _id: ObjectID().toHexString()
     }
   }
@@ -54,7 +44,7 @@ class CardMaker extends React.Component<{}, State> {
 
   render (): React.JSX.Element {
     return (
-      <Wrap w='100%' justify='center' pt='1rem' pb='1rem' spacing='2rem'>
+      <Wrap w='100%' justify='center' pt='1rem' pb='1rem' spacing='2rem' ref='CardMaker'>
         <WrapItem alignContent='center'>
           <CardMakerPreview cardData={this.state.cardData} />
         </WrapItem>

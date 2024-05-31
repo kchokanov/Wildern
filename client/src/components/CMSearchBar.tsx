@@ -54,14 +54,14 @@ class CMSearchBar extends React.Component<Prop> {
   render (): React.JSX.Element {
     return (
       // parent positions children vertically
-      <VStack pos='relative' zIndex='dropdown'>
+      <VStack pos='relative' zIndex='docked'>
 
         {/* search input which handles result display boolean */}
         <Input
           backgroundColor='white'
           color='black'
           placeholder='Search...'
-          w='32vw'
+          w='31.5vw'
           minW={80}
           value={this.state.cardName}
           onClick={() => {
