@@ -1,6 +1,6 @@
-import React, { } from 'react'
+import React from 'react'
 import ObjectID from 'bson-objectid'
-import { Wrap, WrapItem } from '@chakra-ui/react'
+import { Box, Center, HStack, VStack, Wrap, WrapItem } from '@chakra-ui/react'
 
 import CardMakerForm from './components/CardMakerForm'
 import CardMakerPreview from './components/CardMakerPreview'
@@ -10,9 +10,13 @@ interface State {
 }
 
 class CardMaker extends React.Component<{}, State> {
-  // binding magic so js doesn't forget the set function exists when passing the ref
+  mainRef: React.RefObject<HTMLDivElement>
+
   constructor (props: {}) {
     super(props)
+    this.mainRef = React.createRef()
+
+    // binding magic so js doesn't forget the set function exists when passing the ref
     this.setCardData = this.setCardData.bind(this)
   }
 
@@ -44,14 +48,16 @@ class CardMaker extends React.Component<{}, State> {
 
   render (): React.JSX.Element {
     return (
-      <Wrap w='100%' justify='center' pt='1rem' pb='1rem' spacing='2rem' ref='CardMaker'>
-        <WrapItem alignContent='center'>
-          <CardMakerPreview cardData={this.state.cardData} />
-        </WrapItem>
-        <WrapItem alignContent='center'>
-          <CardMakerForm cardData={this.state.cardData} setCardData={this.setCardData} />
-        </WrapItem>
-      </Wrap>
+      <Box w='100%' h='100%' ref={this.mainRef}>
+        <Wrap w='100%' justify='center' pt='1rem' pb='1rem' spacing='2rem'>
+          <WrapItem alignContent='center'>
+            <CardMakerPreview cardData={this.state.cardData} />
+          </WrapItem>
+          <WrapItem alignContent='center'>
+            <CardMakerForm cardData={this.state.cardData} setCardData={this.setCardData} mainPageRef={this.mainRef} />
+          </WrapItem>
+        </Wrap>
+      </Box>
     )
   }
 }

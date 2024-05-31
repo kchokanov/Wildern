@@ -10,7 +10,8 @@ import CMFormValueCostSeg from './CMFormValueCostSeg'
 
 interface Prop {
   cardData: card
-  setCardData: Function
+  setCardData: Function,
+  mainPageRef: React.RefObject<HTMLDivElement>
 }
 
 class CardMakerForm extends React.Component<Prop> {
