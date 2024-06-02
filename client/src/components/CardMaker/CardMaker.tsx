@@ -29,7 +29,7 @@ class CardMaker extends React.Component<{}, State> {
       author: '',
       artAuthor: '',
       atk: 0,
-      def: 0,
+      hp: 0,
       costs: [{ type: '', amount: 0 }],
       values: [{ type: '', amount: 0 }],
       traits: {

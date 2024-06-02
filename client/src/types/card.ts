@@ -19,7 +19,7 @@ export interface card {
   author: string | ''
   artAuthor: string | ''
   atk: number | 0
-  def: number | 0
+  hp: number | 0
   costs: Array<{ type: string, amount: number }>
   values: Array<{ type: string, amount: number }>
   traits: {

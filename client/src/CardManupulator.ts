@@ -53,6 +53,12 @@ class CardManupulator {
     this.stateSetter(card)
   }
 
+  public updateStat (fieldName: 'atk' | 'hp', newValue: number): void {
+    const card = this.stateGetter()
+    card[fieldName] = newValue
+    this.stateSetter(card)
+  }
+
   public updateCostValueField (fieldName: 'costs' | 'values', index: number, type: string | null, amount: number | null): void {
     if (type == null && amount == null) {
       console.error('Attempted Tribute set with no data.')

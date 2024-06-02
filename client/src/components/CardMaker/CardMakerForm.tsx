@@ -9,6 +9,8 @@ import TraitCheckboxGroup from './Form/TraitCheckboxGroup'
 import DownloadCardAsJsonButton from './Form/DownloadCardAsJsonButton'
 import UploadCardButton from './Form/UploadCardButton'
 import TributeField from './Form/TributeField'
+import StatsInput from './Form/StatsInput'
+import { cardType } from '../../types/card'
 
 interface Prop {
   cardMan: CardManupulator
@@ -71,6 +73,9 @@ class CardMakerForm extends React.Component<Prop> {
               maxFields={3}
               {...this.props}
             />
+          </WrapItem>
+          <WrapItem pb={3}>
+            <StatsInput isDisplayed = {this.props.cardMan.getCardData().cardType === cardType.wildern}{...this.props}/>
           </WrapItem>
         </Wrap>
         <Divider pt={3} />
