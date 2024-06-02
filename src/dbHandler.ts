@@ -5,6 +5,7 @@ import express from 'express'
 export function apiWrite (model: typeof mongoose.Model, req: express.Request, res: express.Response): void {
   if (req.body._id == null) {
     res.status(400).send('No id in request')
+    return
   }
   model
     .findOneAndUpdate(req.body.name != null ? { name: req.body.name, _id: req.body._id } : { _id: req.body._id }, req.body, {
@@ -23,17 +24,18 @@ export function apiWrite (model: typeof mongoose.Model, req: express.Request, re
 
 // fetches from DB by model and name if present in req, or id if not
 export function apiQuery (model: typeof mongoose.Model, req: express.Request, res: express.Response): void {
-  if (req.query._id == null) {
-    res.status(400).send('No id in request')
+  if (req.query._id == null && req.query.name == null) {
+    res.status(400).send('No id or name in request')
+    return
   }
-  model.findById({ _id: req.query._id })
+  model.findOne(req.query.name != null && String(req.query.name).replace(/\s/g, '') !== '' ? { name: req.query.name } : { _id: req.query._id })
     .then(data => {
-      console.log(`Fetched data: ${model.collection.collectionName}, _id: ${String(req.query._id)}`)
+      console.log(`Fetched data: ${model.collection.collectionName}, name: ${String(req.query.name)}, _id: ${String(req.query._id)}`)
       res.status(200).send(data)
     })
     .catch(err => {
       console.error(err)
-      res.status(500).send(`Server failed fetch for: _id: ${String(req.query._id)}`)
+      res.status(500).send(`Server failed fetch for: name: ${String(req.query.name)}, _id: ${String(req.query._id)}`)
     })
 }
 
@@ -51,17 +53,18 @@ export function apiFetchAll (model: typeof mongoose.Model, res: express.Response
 }
 
 export function apiFetchAllNames (model: typeof mongoose.Model, req: express.Request, res: express.Response): void {
-  if (req.query.name == null) {
+  if (req.query.searchQueryStr == null) {
     res.status(400).send('No name in request')
+    return
   }
   model
-    .find(req.query.name !== '' ? { name: { $regex: req.query.name, $options: 'i' } } : {}).select('name')
+    .find(req.query.searchQueryStr !== '' ? { name: { $regex: req.query.searchQueryStr, $options: 'i' } } : {}).select('name')
     .then((data) => {
-      console.log(`Fetched all matching data: ${model.collection.collectionName}, name: '${String(req.query.name)}'`)
+      console.log(`Fetched all matching data: ${model.collection.collectionName}, searchQuery: '${String(req.query.searchQueryStr)}'`)
       res.status(200).send(data)
     })
     .catch((err) => {
       console.error(err)
-      res.status(500).send(`Server failed fetch for all mathing: name: ${String(req.query.name)}`)
+      res.status(500).send(`Server failed fetch for all mathing: searchQuery: ${String(req.query.searchQueryStr)}`)
     })
 }

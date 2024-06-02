@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
-  "include": ["src/**/*"],
+  "include": ["src/**/**/*"],
   "exclude": ["node_modules"],
   "lib": ["ES2022","DOM"],
 
