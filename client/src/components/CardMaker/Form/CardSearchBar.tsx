@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Input, Text, VStack } from '@chakra-ui/react'
-import { fetchCardListByNameMatch } from '../../../ApicallWrapper'
+import { fetchCardListByNameMatch } from '../../../ApiCallWrapper'
 import CardManupulator from '../../../CardManupulator'
 
 interface Prop {

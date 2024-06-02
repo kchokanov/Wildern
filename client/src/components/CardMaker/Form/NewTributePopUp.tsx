@@ -1,10 +1,11 @@
 import React from 'react'
 import { Button, HStack, Input, Popover, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader } from '@chakra-ui/react'
-import { postTributeType } from '../../../ApicallWrapper'
+import { postTributeType } from '../../../ApiCallWrapper'
 
 interface Prop {
   displayPopUp: boolean
   setDisplay: Function
+  updateList: Function
 }
 
 interface State {
@@ -21,6 +22,7 @@ class NewTributePopUp extends React.Component<Prop, State> {
       if (res) {
         // TODO - success toast
         console.log('Uploaded Tribute')
+        this.props.updateList()
       } else {
         // TODO - error toast
       }

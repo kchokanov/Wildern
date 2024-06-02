@@ -36,7 +36,8 @@ class CardTypeSelect extends React.Component<Prop> {
 
     return (
       <Select
-        placeholder='Select card type' id='typeSelect'
+        placeholder='Select card type'
+        id='typeSelect'
         value={this.props.cardMan.getCardData().cardType}
         onChange={() => this.updateSelected()}
       >

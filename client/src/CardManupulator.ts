@@ -1,5 +1,5 @@
 import ObjectID from 'bson-objectid'
-import { fetchCardbyId, postCard } from './ApicallWrapper'
+import { fetchCardbyId, postCard } from './ApiCallWrapper'
 import { card, cardTrait, cardType } from './types/card'
 
 // CardMan is used to seperate out logic for interacting with
@@ -37,9 +37,11 @@ class CardManupulator {
   public async saveCard (): Promise<boolean> {
     let success = false
     await postCard(this.getCardData())
-      .then(() => {
-        success = true
-        this.updateStringField('_id', new ObjectID().toHexString())
+      .then((res) => {
+        if (res) {
+          success = true
+          this.updateStringField('_id', new ObjectID().toHexString())
+        }
       })
     return success
   }
@@ -51,9 +53,31 @@ class CardManupulator {
     this.stateSetter(card)
   }
 
-  public updateCostValueField (fieldName: 'costs' | 'values', newValue: [{ type: string, amount: 0 }]): void {
+  public updateCostValueField (fieldName: 'costs' | 'values', index: number, type: string | null, amount: number | null): void {
+    if (type == null && amount == null) {
+      console.error('Attempted Tribute set with no data.')
+      return
+    }
+
     const card = this.stateGetter()
-    card[fieldName] = newValue
+    if (type != null) {
+      card[fieldName][index].type = type
+    }
+    if (amount != null) {
+      card[fieldName][index].amount = amount
+    }
+    this.stateSetter(card)
+  }
+
+  public addCostValue (fieldName: 'costs' | 'values', newValue: { type: string, amount: 0 }): void {
+    const card = this.stateGetter()
+    card[fieldName].push(newValue)
+    this.stateSetter(card)
+  }
+
+  public removeCostValue (fieldName: 'costs' | 'values', index: number): void {
+    const card = this.stateGetter()
+    card[fieldName].splice(index - 1, 1)
     this.stateSetter(card)
   }
 

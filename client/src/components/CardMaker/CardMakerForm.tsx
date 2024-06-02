@@ -57,10 +57,20 @@ class CardMakerForm extends React.Component<Prop> {
 
         <Wrap justify='center' w='100%'>
           <WrapItem pb={3}>
-            <TributeField type='values' maxFields={3} {...this.props} />
+            <TributeField
+              fieldCount={this.props.cardMan.getCardData().values.length}
+              type='values'
+              maxFields={3}
+              {...this.props}
+            />
           </WrapItem>
           <WrapItem pb={3}>
-            <TributeField type='costs' maxFields={3} {...this.props} />
+            <TributeField
+              fieldCount={this.props.cardMan.getCardData().costs.length}
+              type='costs'
+              maxFields={3}
+              {...this.props}
+            />
           </WrapItem>
         </Wrap>
         <Divider pt={3} />
