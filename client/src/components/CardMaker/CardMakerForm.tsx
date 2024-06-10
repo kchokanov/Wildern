@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Card, Center, Divider, Flex, HStack, Spacer, Wrap, WrapItem } from '@chakra-ui/react'
+import { Box, Card, Center, HStack, Spacer, Wrap, WrapItem } from '@chakra-ui/react'
 import CardNameInput from './Form/CardNameInput'
 import CardManupulator from '../../CardManupulator'
 import CardSearchBar from './Form/CardSearchBar'
@@ -11,6 +11,9 @@ import UploadCardButton from './Form/UploadCardButton'
 import TributeField from './Form/TributeField'
 import StatsInput from './Form/StatsInput'
 import { cardType } from '../../types/card'
+import ArtUpload from './Form/ArtUpload'
+import EffectInput from './Form/EffectInput'
+import QuoteInput from './Form/QuoteInput'
 
 interface Prop {
   cardMan: CardManupulator
@@ -19,76 +22,95 @@ interface Prop {
 
 // TODO - reset id button
 class CardMakerForm extends React.Component<Prop> {
+  constructor (props: {
+    cardMan: CardManupulator
+    pageRef: React.RefObject<HTMLDivElement>
+  }) {
+    super(props)
+
+    // binding magic so JS doesn't forget the set function exists when it's passed to child component
+    this.loadFile = this.loadFile.bind(this)
+  }
+
+  loadFile (target: HTMLInputElement): void {
+    this.props.cardMan.setFromFile(target.files![0])
+  }
+
   render (): React.JSX.Element {
     return (
-      <Card bg='#C99DA3' textColor='#EEEBD0' p={5} w='100%'>
-
-        <Wrap w='100%' justify='center'>
-          <WrapItem pb={3}>
+      <Card
+        bg='#CB807D'
+        textColor='#EEEBD0'
+        p='1em'
+        w='100%'
+        boxShadow='0 2px 4px 0 rgb(34 36 38 / 12%), 0 2px 10px 0 rgb(34 36 38 / 15%);'
+      >
+        <HStack w='100%' minW='30rem'>
+          <Box w='58%' pl='1em'>
             <CardSearchBar {...this.props} />
-          </WrapItem>
-          <WrapItem pt={2} pb={3} pl={10}>
-            <LoadLocalFileButton {...this.props} />
-          </WrapItem>
-        </Wrap>
-        <Divider pt={3} />
-        <Box pb={3} />
+          </Box>
+          <Box pl='1em'>
+            <LoadLocalFileButton label='Load from .json' fileHandler={this.loadFile} {...this.props} />
+          </Box>
+        </HStack>
 
-        <Wrap justify='center' w='100%'>
-          <WrapItem pb={3}>
-            <HStack h='100%'>
+        <Card
+          bg='#FFFFFF'
+          textColor='#14342B'
+          p='1em'
+          w='100%'
+          mt='1em'
+          boxShadow='0 2px 4px 0 rgb(34 36 38 / 12%), 0 2px 10px 0 rgb(34 36 38 / 15%);'
+        >
+          <Wrap w='100%'>
+            <WrapItem pl='.5em'>
               <Center h='100%'>
                 <CardNameInput {...this.props} />
               </Center>
-            </HStack>
-          </WrapItem>
-          <WrapItem pl={3} pb={3}>
-            <HStack h='100%' gap={6}>
+            </WrapItem>
+            <WrapItem pl='.5em'>
               <Center h='100%'>
-                <CardTypeSelect {...this.props} />
+                <Box pr='2em'>
+                  <CardTypeSelect {...this.props} />
+                </Box>
+                <Box pl='1em' w='100%'>
+                  {/* TODO - could move trait enum to DB */}
+                  <TraitCheckboxGroup {...this.props} />
+                </Box>
               </Center>
+            </WrapItem>
 
-              <Divider orientation='vertical' />
+          </Wrap>
+          <Wrap w='100%' pt='2em' spacing='2em'>
+            <WrapItem>
+              <TributeField type='values' maxFields={3} fieldCount={this.props.cardMan.getCardData().values.length} {...this.props} />
+            </WrapItem>
+            <WrapItem>
+              <TributeField type='costs' maxFields={3} fieldCount={this.props.cardMan.getCardData().costs.length} {...this.props} />
+            </WrapItem>
+            <WrapItem>
+              {/* TODO - could move card type enum to DB */}
+              <StatsInput isDisplayed={this.props.cardMan.getCardData().cardType === cardType.wildern} {...this.props} />
+            </WrapItem>
+          </Wrap>
 
-              <TraitCheckboxGroup {...this.props} />
-            </HStack>
-          </WrapItem>
-        </Wrap>
-        <Divider pt={3} />
-        <Box pb={3} />
+          <Box pt='2em'>
+            <ArtUpload {...this.props} />
+          </Box>
 
-        <Wrap justify='center' w='100%'>
-          <WrapItem pb={3}>
-            <TributeField
-              fieldCount={this.props.cardMan.getCardData().values.length}
-              type='values'
-              maxFields={3}
-              {...this.props}
-            />
-          </WrapItem>
-          <WrapItem pb={3}>
-            <TributeField
-              fieldCount={this.props.cardMan.getCardData().costs.length}
-              type='costs'
-              maxFields={3}
-              {...this.props}
-            />
-          </WrapItem>
-          <WrapItem pb={3}>
-            <StatsInput isDisplayed = {this.props.cardMan.getCardData().cardType === cardType.wildern}{...this.props}/>
-          </WrapItem>
-        </Wrap>
-        <Divider pt={3} />
-        <Box pb={3} />
+          <Box pt='2em'>
+            <EffectInput {...this.props} />
+          </Box>
 
-        <Box>
-          <Flex>
-            <UploadCardButton {...this.props} />
-            <Spacer />
-            <DownloadCardAsJsonButton {...this.props} />
-          </Flex>
-          <Divider pt={3} />
-        </Box>
+          <Box pt='2em' pl='.5em' w='100%'>
+            <QuoteInput {...this.props} />
+          </Box>
+        </Card>
+        <HStack w='100%' pt='2em'>
+          <UploadCardButton {...this.props} />
+          <Spacer />
+          <DownloadCardAsJsonButton {...this.props} />
+        </HStack>
       </Card>
     )
   }

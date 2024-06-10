@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, HStack, Input, Popover, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader } from '@chakra-ui/react'
+import { Box, Button, Card, Center, Divider, HStack, Input, Text } from '@chakra-ui/react'
+import { IoMdCloseCircleOutline } from 'react-icons/io'
 import { postTributeType } from '../../../ApiCallWrapper'
 
 interface Prop {
@@ -32,19 +33,44 @@ class NewTributePopUp extends React.Component<Prop, State> {
   }
 
   render (): React.JSX.Element {
+    // TODO - use Modal tag
     return (
-      <Popover isOpen={this.props.displayPopUp} placement='end-end' isLazy>
-        <PopoverContent>
-          <PopoverCloseButton onClick={() => this.props.setDisplay(false)} />
-          <PopoverHeader>Add New Tribute Type:</PopoverHeader>
-          <PopoverBody>
-            <HStack>
-              <Input onChange={(e) => this.setState({ newTribute: e.target.value })} />
-              <Button onClick={() => this.submitTribute()}>Submit</Button>
+      <Box w='100%' h='100%' top={0} left={0} pos='absolute' display={this.props.displayPopUp ? 'block' : 'none'}>
+        <Center h='100%'>
+          <Card
+            bg='#FFFFFF'
+            textColor='#14342B'
+            boxShadow='0 2px 4px 0 rgb(34 36 38 / 12%), 0 2px 10px 0 rgb(34 36 38 / 15%);'
+          >
+            <HStack justify='space-between' align='start'>
+              <Box w='12em' p='1em'>
+                <Text color='#AC6D6A' as='b'>New Tribute Name:</Text>
+                <Divider />
+              </Box>
+              <Box
+                p='.25em'
+                as='button'
+                onClick={() => this.props.setDisplay(false)}
+                color='#14342B'
+                _hover={{ color: '#CB807D' }}
+              >
+                <IoMdCloseCircleOutline size='2em' color='inherit' />
+              </Box>
             </HStack>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
+            <HStack pl='1em' pr='1em' pb='1em'>
+              <Input w='15em' onChange={(e) => this.setState({ newTribute: e.target.value })} />
+              <Button
+                bg='#CB807D'
+                color='#FFFFFF'
+                _hover={{ bg: '#925B59', color: '#EEEBD0' }}
+                onClick={() => this.submitTribute()}
+              >
+                Submit
+              </Button>
+            </HStack>
+          </Card>
+        </Center>
+      </Box>
     )
   }
 }

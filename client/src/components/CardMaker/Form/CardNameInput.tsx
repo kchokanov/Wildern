@@ -1,4 +1,4 @@
-import { Input, InputGroup } from '@chakra-ui/react'
+import { Box, Divider, Input, Text } from '@chakra-ui/react'
 import React from 'react'
 import CardManupulator from '../../../CardManupulator'
 
@@ -9,16 +9,21 @@ interface Prop {
 class CardNameInput extends React.Component<Prop> {
   render (): React.JSX.Element {
     return (
-      <InputGroup>
+      <Box w='100%'>
+        <Box w='5em'>
+          <Text color='#AC6D6A' as='b'>Name:</Text>
+          <Divider />
+        </Box>
         <Input
-          minW={80}
-          w='28vw'
-          bg='white'
-          placeholder='Dark Destroyer of... Darkness'
+          w='100%'
+          minW='25em'
+          variant='flushed'
+          placeholder='Big Barry'
+          _placeholder={{ opacity: 0.7, color: '#14342B' }}
           value={this.props.cardMan.getCardData().name}
           onChange={e => this.props.cardMan.updateStringField('name', e.target.value)}
         />
-      </InputGroup>
+      </Box>
     )
   }
 }

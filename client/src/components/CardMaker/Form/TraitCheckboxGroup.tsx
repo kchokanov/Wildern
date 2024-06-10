@@ -1,4 +1,4 @@
-import { Checkbox, VStack, CheckboxGroup } from '@chakra-ui/react'
+import { Box, Checkbox, Divider, Wrap, WrapItem, Text, HStack } from '@chakra-ui/react'
 import React from 'react'
 import CardManupulator from '../../../CardManupulator'
 import { cardTrait, cardType } from '../../../types/card'
@@ -45,27 +45,37 @@ class TraitCheckboxGroup extends React.Component<Prop> {
     // JS magic to loop through an enum
     { (Object.keys(cardTrait) as Array<keyof typeof cardTrait>).map((key: keyof typeof cardTrait) => {
       return checkboxes.push(
-        <Checkbox
-          display={this.checkIsVisible(cardTrait[key]) ? 'block' : 'none'}
-          key={'CTCheckbox_' + key}
-          isChecked={this.checkIsChecked(cardTrait[key])}
-          disabled={this.checkIsDisabled(cardTrait[key])}
-          onChange={e => {
-            this.props.cardMan.updateTrait(cardTrait[key], e.target.checked)
-          }}
-        >
-          {/* Capitalise and seperate words */}
-          {(key.charAt(0).toUpperCase() + key.slice(1)).replace(/([A-Z])/g, ' $1').trim()}
-        </Checkbox>
+        <WrapItem key={'CTCheckbox_' + key}>
+          <Checkbox
+            display={this.checkIsVisible(cardTrait[key]) ? 'block' : 'none'}
+            isChecked={this.checkIsChecked(cardTrait[key])}
+            disabled={this.checkIsDisabled(cardTrait[key])}
+            onChange={e => {
+              this.props.cardMan.updateTrait(cardTrait[key], e.target.checked)
+            }}
+          >
+            {/* Capitalise and seperate words */}
+            {(key.charAt(0).toUpperCase() + key.slice(1)).replace(/([A-Z])/g, ' $1').trim()}
+          </Checkbox>
+        </WrapItem>
       )
     }) }
 
     return (
-      <CheckboxGroup>
-        <VStack align='left' minW={40}>
-          {checkboxes}
-        </VStack>
-      </CheckboxGroup>
+      <HStack h='100%'>
+        <Divider orientation='vertical' />
+        <Box>
+          <Box w='8em' pb='.7em'>
+            <Text color='#AC6D6A' as='b'>Special Traits:</Text>
+            <Divider />
+          </Box>
+          <HStack>
+            <Wrap>
+              {checkboxes}
+            </Wrap>
+          </HStack>
+        </Box>
+      </HStack>
     )
   }
 }

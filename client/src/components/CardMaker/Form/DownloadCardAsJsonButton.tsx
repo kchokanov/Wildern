@@ -19,7 +19,16 @@ class DownloadCardAsJsonButton extends React.Component<Prop> {
 
   render (): React.JSX.Element {
     return (
-      <Button onClick={() => this.downloadCard(this.props.cardMan.getCardData())}>Download JSON</Button>
+      <Button
+        p='1em'
+        bg='#FFFFFF'
+        color='#AC6D6A'
+        _hover={{ bg: '#925B59', color: '#EEEBD0' }}
+        boxShadow='0 2px 4px 0 rgb(34 36 38 / 12%), 0 2px 10px 0 rgb(34 36 38 / 15%);'
+        onClick={() => this.downloadCard(this.props.cardMan.getCardData())}
+      >
+        Download as .json
+      </Button>
     )
   }
 }

@@ -1,9 +1,10 @@
 import React from 'react'
 import CardManupulator from '../../../CardManupulator'
-import { Button, ButtonGroup, HStack, Input, VStack } from '@chakra-ui/react'
+import { HStack, Input, Text, Box, Divider, Card } from '@chakra-ui/react'
 import TributeSelect from './TributeSelect'
 import { tribute } from '../../../types/tribute'
 import { fetchTributeTypes } from '../../../ApiCallWrapper'
+import { FaMinus, FaPlus } from 'react-icons/fa'
 
 interface Prop {
   cardMan: CardManupulator
@@ -69,6 +70,7 @@ class TributeField extends React.Component<Prop> {
       this.props.cardMan.updateCostValueField(this.props.type, index, null, Number(newAmout))
     } else {
       console.error('Attempted to set type amount to NaN')
+      this.props.cardMan.updateCostValueField(this.props.type, index, null, Number(0))
       // TODO - error toast
     }
   }
@@ -78,33 +80,54 @@ class TributeField extends React.Component<Prop> {
 
     for (let i = 0; i < this.props.fieldCount; i++) {
       fields.push(
-        <HStack w={300} key={this.props.type + String(i)}>
-          <ButtonGroup>
-            <Button
-              display={i === this.props.maxFields - 1 ? 'none' : 'block'}
-              onClick={() => this.updateFieldCount(true)}
-            > +
-            </Button>
-            <Button
-              display={i === 0 ? 'none' : 'block'}
-              onClick={() => this.updateFieldCount(false)}
-            > -
-            </Button>
-          </ButtonGroup>
+        <HStack display='flex' justifyContent='flex-end' key={this.props.type + String(i)} pt='.25em'>
+          <Box
+            as='button'
+            display={i === this.props.maxFields - 1 ? 'none' : 'block'}
+            onClick={() => this.updateFieldCount(true)}
+            color='#14342B'
+            _hover={{ color: '#CB807D' }}
+          >
+            <FaPlus size={20} color='inherit' />
+          </Box>
+          <Box
+            as='button'
+            display={i === 0 ? 'none' : 'block'}
+            onClick={() => this.updateFieldCount(false)}
+            color='#14342B'
+            _hover={{ color: '#CB807D' }}
+          >
+            <FaMinus size={20} color='inherit' />
+          </Box>
           <TributeSelect updateList={this.updateList} tributeTypeList={this.state.tributesTypeList} index={i} {...this.props} />
           <Input
-            w={55}
-            value={this.props.cardMan.getCardData()[this.props.type][i].amount}
+            type='number'
+            pattern='[0-9]'
+            textAlign='center'
+            variant='flushed'
+            w='2.5em'
+            defaultValue={this.props.cardMan.getCardData()[this.props.type][i].amount}
             onChange={(e) => this.setAmount(e.target.value, i)}
           />
+
         </HStack>
       )
     }
 
     return (
-      <VStack>
+      <Card w='16.5em' p='1em'>
+        <HStack>
+          <Box pl='3.9em' w='8em'>
+            <Text color='#AC6D6A' as='b'>{this.props.type === 'costs' ? 'Cost:' : 'Value:'}</Text>
+            <Divider />
+          </Box>
+          <Box pl='3.7em'>
+            <Text color='#AC6D6A'>0 - 9</Text>
+            <Divider />
+          </Box>
+        </HStack>
         {fields}
-      </VStack>
+      </Card>
     )
   }
 }

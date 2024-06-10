@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Input, Text, VStack } from '@chakra-ui/react'
+import { Box, Input, InputGroup, InputLeftElement, Text, VStack } from '@chakra-ui/react'
+import { FaSearch } from 'react-icons/fa'
 import { fetchCardListByNameMatch } from '../../../ApiCallWrapper'
 import CardManupulator from '../../../CardManupulator'
 
@@ -62,42 +63,44 @@ class CardSearchBar extends React.Component<Prop> {
     })
 
     return (
-      <VStack pos='relative' zIndex='docked'>
+      <VStack pos='relative' zIndex='docked' w='100%'>
 
         {/* Search Input */}
-        <Input
-          backgroundColor='white'
-          color='black'
-          placeholder='Search...'
-          w='31.5vw'
-          minW={80}
-          value={this.state.searchQuery}
-          onClick={() => {
-            this.setState({ showResults: true })
-            this.doSearch()
-          }}
-          onChange={e => {
-            this.setState({ searchQuery: e.target.value })
-            this.doSearch()
-          }}
-          onBlur={() => this.setState({ showResults: false })}
-        />
-
+        <InputGroup>
+          <InputLeftElement>
+            <FaSearch />
+          </InputLeftElement>
+          <Input
+            placeholder='Search...'
+            _placeholder={{ opacity: 0.9, color: '#EEEBD0' }}
+            variant='flushed'
+            color='black'
+            w='100%'
+            value={this.state.searchQuery}
+            onClick={() => {
+              this.setState({ showResults: true })
+              this.doSearch()
+            }}
+            onChange={e => {
+              this.setState({ searchQuery: e.target.value })
+              this.doSearch()
+            }}
+            onBlur={() => this.setState({ showResults: false })}
+          />
+        </InputGroup>
         {/* Results Display */}
         <Box
           display={this.state.showResults && this.state.searchResults[0] != null ? 'block' : 'none'}
           position='absolute'
           zIndex={-1}
-          top={8}
+          top='2.5em'
           width='100%'
           backgroundColor='white'
           color='black'
-          maxH={300}
+          maxH='75em'
           overflowY='auto'
-          pt={2}
-          pl={1}
-          pr={1}
-          borderBottomRadius={4}
+          p='1px, 1px, 0'
+          borderBottomRadius='.25em'
           boxShadow='0 2px 4px 0 rgb(34 36 38 / 12%), 0 2px 10px 0 rgb(34 36 38 / 15%);'
         >
           {resultsList}

@@ -1,4 +1,4 @@
-import { Select } from '@chakra-ui/react'
+import { Box, Divider, Select, Text } from '@chakra-ui/react'
 import React from 'react'
 import CardManupulator from '../../../CardManupulator'
 import { cardType } from '../../../types/card'
@@ -35,14 +35,22 @@ class CardTypeSelect extends React.Component<Prop> {
     }) }
 
     return (
-      <Select
-        placeholder='Select card type'
-        id='typeSelect'
-        value={this.props.cardMan.getCardData().cardType}
-        onChange={() => this.updateSelected()}
-      >
-        {selectOptions}
-      </Select>
+      <Box>
+        <Box w='6em'>
+          <Text color='#AC6D6A' as='b'>Card Type:</Text>
+          <Divider />
+        </Box>
+        <Select
+          w='8em'
+          variant='flushed'
+          id='typeSelect'
+          value={this.props.cardMan.getCardData().cardType}
+          onChange={() => this.updateSelected()}
+          _hover={{ cursor: 'pointer' }}
+        >
+          {selectOptions}
+        </Select>
+      </Box>
     )
   }
 }

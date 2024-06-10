@@ -47,7 +47,7 @@ class CardManupulator {
   }
 
   // TODO - might be a way to pass any value in args without the list being locked to readonly. If found, can compress all updates to a single method
-  public updateStringField (fieldName: 'name' | '_id', newValue: string): void {
+  public updateStringField (fieldName: 'name' | '_id' | 'artAuthor' | 'effect' | 'quote', newValue: string): void {
     const card = this.stateGetter()
     card[fieldName] = newValue
     this.stateSetter(card)

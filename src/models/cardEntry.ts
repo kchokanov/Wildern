@@ -10,7 +10,7 @@ const cardEntrySchema = new mongoose.Schema({
   author: String,
   artAuthor: String,
   atk: Number,
-  def: Number,
+  hp: Number,
   costs: Array,
   values: Array,
   traits: Object,

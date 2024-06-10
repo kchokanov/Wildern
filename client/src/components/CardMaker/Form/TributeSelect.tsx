@@ -64,10 +64,12 @@ class TributeSelect extends React.Component<Prop, State> {
     return (
       <Box>
         <Select
-          placeholder='Tribute Type'
+          variant='flushed'
+          placeholder='Select Type'
           id={'tributeSelect_' + this.props.type}
           value={this.props.cardMan.getCardData()[this.props.type][this.props.index].type}
           onChange={() => this.updateSelected()}
+          _hover={{ cursor: 'pointer' }}
         >
           {selectOption}
           <option onClick={() => { this.setPopUp(true) }}>Add New</option>

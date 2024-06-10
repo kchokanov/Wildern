@@ -52,13 +52,17 @@ class CardMaker extends React.Component<{}, State> {
       <Box w='100%' h='100%' ref={this.ref}>
         <Wrap w='100%' justify='center' pt='1rem' pb='1rem' spacing='2rem'>
           <WrapItem alignContent='center'>
-            <CardMakerPreview />
+            <Box minW='30rem'>
+              <CardMakerPreview />
+            </Box>
           </WrapItem>
           <WrapItem alignContent='center'>
-            <CardMakerForm
-              cardMan={this.state.cardMan}
-              pageRef={this.ref}
-            />
+            <Box minW='30rem' w='60vw'>
+              <CardMakerForm
+                cardMan={this.state.cardMan}
+                pageRef={this.ref}
+              />
+            </Box>
           </WrapItem>
         </Wrap>
       </Box>
