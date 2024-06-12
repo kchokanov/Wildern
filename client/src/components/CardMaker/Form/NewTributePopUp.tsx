@@ -58,11 +58,17 @@ class NewTributePopUp extends React.Component<Prop, State> {
               </Box>
             </HStack>
             <HStack pl='1em' pr='1em' pb='1em'>
-              <Input w='15em' onChange={(e) => this.setState({ newTribute: e.target.value })} />
+              <Input 
+                w='15em'
+                placeholder='Name'
+                _placeholder={{ opacity: 0.7, color: '#14342B' }}
+                onChange={(e) => this.setState({ newTribute: e.target.value })} 
+              />
               <Button
-                bg='#CB807D'
-                color='#FFFFFF'
+                bg='#FFFFFF'
+                color='#AC6D6A'
                 _hover={{ bg: '#925B59', color: '#EEEBD0' }}
+                boxShadow='0 2px 4px 0 rgb(34 36 38 / 12%), 0 2px 10px 0 rgb(34 36 38 / 15%);'
                 onClick={() => this.submitTribute()}
               >
                 Submit
