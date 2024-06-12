@@ -58,11 +58,11 @@ class NewTributePopUp extends React.Component<Prop, State> {
               </Box>
             </HStack>
             <HStack pl='1em' pr='1em' pb='1em'>
-              <Input 
+              <Input
                 w='15em'
                 placeholder='Name'
                 _placeholder={{ opacity: 0.7, color: '#14342B' }}
-                onChange={(e) => this.setState({ newTribute: e.target.value })} 
+                onChange={(e) => this.setState({ newTribute: e.target.value })}
               />
               <Button
                 bg='#FFFFFF'

@@ -21,7 +21,9 @@ class CardTypeSelect extends React.Component<Prop> {
     const selectOptions: React.JSX.Element[] = []
 
     // little bit of JS magic to loop through an enum
-    { (Object.keys(cardType) as Array<keyof typeof cardType>).map((key: keyof typeof cardType) => {
+    const typeList: Array<keyof typeof cardType> = Object.keys(cardType) as Array<keyof typeof cardType>
+
+    typeList.map((key: keyof typeof cardType) => {
       return selectOptions.push(
         <option
           value={key}
@@ -32,7 +34,7 @@ class CardTypeSelect extends React.Component<Prop> {
           {key.charAt(0).toUpperCase() + key.slice(1)}
         </option>
       )
-    }) }
+    })
 
     return (
       <Box>

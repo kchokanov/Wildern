@@ -1,10 +1,16 @@
 import React from 'react'
-import { Text, Center, Card } from '@chakra-ui/react'
+import { Center, Card } from '@chakra-ui/react'
+import CardManupulator from '../../CardManupulator'
+import PreviewCanvas from './PreviewCanvas'
 
-class CardMakerPreview extends React.Component<{}> {
+interface Prop {
+  cardMan: CardManupulator
+}
+class CardMakerPreview extends React.Component<Prop> {
   render (): React.JSX.Element {
     return (
       <Card
+        p='1em'
         bg='#CB807D'
         textColor='#EEEBD0'
         minW='30rem'
@@ -13,7 +19,7 @@ class CardMakerPreview extends React.Component<{}> {
       >
         {/* TODO - character limits for text fields based on canvas */}
         <Center h='100%'>
-          <Text>canvas</Text>
+          <PreviewCanvas {...this.props} />
         </Center>
       </Card>
     )

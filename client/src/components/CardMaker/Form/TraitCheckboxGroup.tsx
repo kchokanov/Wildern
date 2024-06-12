@@ -43,7 +43,9 @@ class TraitCheckboxGroup extends React.Component<Prop> {
     const checkboxes: React.JSX.Element[] = []
 
     // JS magic to loop through an enum
-    { (Object.keys(cardTrait) as Array<keyof typeof cardTrait>).map((key: keyof typeof cardTrait) => {
+    const traitList: Array<keyof typeof cardTrait> = Object.keys(cardTrait) as Array<keyof typeof cardTrait>
+
+    traitList.map((key: keyof typeof cardTrait) => {
       return checkboxes.push(
         <WrapItem key={'CTCheckbox_' + key}>
           <Checkbox
@@ -59,7 +61,7 @@ class TraitCheckboxGroup extends React.Component<Prop> {
           </Checkbox>
         </WrapItem>
       )
-    }) }
+    })
 
     return (
       <HStack h='100%'>

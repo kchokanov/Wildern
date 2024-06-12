@@ -33,7 +33,9 @@ class CardMakerForm extends React.Component<Prop> {
   }
 
   loadFile (target: HTMLInputElement): void {
-    this.props.cardMan.setFromFile(target.files![0])
+    if (target.files != null) {
+      this.props.cardMan.setFromFile(target.files[0])
+    }
   }
 
   render (): React.JSX.Element {
