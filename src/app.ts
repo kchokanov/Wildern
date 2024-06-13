@@ -8,6 +8,7 @@ import 'dotenv/config'
 import { apiQuery, apiWrite, apiFetchAll, apiFetchAllNames } from './dbHandler'
 import cardEntry from './models/cardEntry'
 import valueEntry from './models/valueEntry'
+import { sendImage } from './imgHandler'
 
 const MONGODB_URL: string = process.env.DB_URL ?? ''
 const PORT: number = Number(process.env.PORT ?? 3000)
@@ -47,6 +48,9 @@ mongoose.connect(MONGODB_URL).then(() => {
   })
   app.get('/api/fetchcardnames', (req, res): void => {
     apiFetchAllNames(cardEntry, req, res)
+  })
+  app.get('/api/getimg', (req, res): void => {
+    sendImage(req, res)
   })
 })
   .catch((err) => console.error(err))

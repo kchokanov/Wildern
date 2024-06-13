@@ -3,14 +3,24 @@ import { card } from './types/card'
 import { tribute } from './types/tribute'
 import ObjectID from 'bson-objectid'
 
-function isFieldBlank (fieldData: any): boolean {
-  if (fieldData == null) {
+// TODO - validate all
+function isDataBlank (data: any): boolean {
+  if (data == null) {
     return true
   }
-  if (String(fieldData).replace(/\s/g, '') === '') {
+  if (String(data).replace(/\s/g, '') === '') {
     return true
   }
   return false
+}
+
+function base64ToBlob (base64String: string, blobType: string): Blob {
+  const byteCharacters = atob(base64String)
+  const byteNumbers = new Array(byteCharacters.length)
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i)
+  }
+  return new Blob([new Uint8Array(byteNumbers)], { type: blobType })
 }
 
 export async function fetchCardbyId (id: string): Promise<null | card> {
@@ -72,7 +82,7 @@ export async function fetchTributeTypes (): Promise<null | tribute[]> {
 export async function postCard (data: card): Promise<boolean> {
   let success = false
 
-  if (isFieldBlank(data.name)) {
+  if (isDataBlank(data.name)) {
     console.error('Attempted upload with no name set.')
     return success
   }
@@ -96,7 +106,7 @@ export async function postCard (data: card): Promise<boolean> {
 export async function postTributeType (name: string): Promise<boolean> {
   let success = false
 
-  if (isFieldBlank(name)) {
+  if (isDataBlank(name)) {
     console.error('Attempted upload with no name set.')
     return success
   }
@@ -109,4 +119,24 @@ export async function postTributeType (name: string): Promise<boolean> {
       console.error(error)
     })
   return success
+}
+
+export async function getImage (fileName: string): Promise<null | Blob> {
+  let data = null
+
+  if (isDataBlank(fileName)) {
+    console.error('No file name in get attempt.')
+    return data
+  }
+
+  await axios.get(`${String(process.env.API_URL)}/api/getimg`, {
+    params: {
+      file: fileName
+    }
+  }).then(res => {
+    data = base64ToBlob(res.data, 'image/png')
+  }).catch(err => {
+    console.error(err)
+  })
+  return data
 }
