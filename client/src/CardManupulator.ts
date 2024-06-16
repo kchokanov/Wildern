@@ -1,6 +1,29 @@
 import ObjectID from 'bson-objectid'
 import { fetchCardbyId, postCard } from './ApiCallWrapper'
-import { card, cardTrait, cardType } from './types/card'
+import { card, cardType, cardTrait } from './types/card'
+
+export function newCard (): card {
+  return {
+    name: '',
+    effect: '',
+    quote: '',
+    cardType: cardType.wildern,
+    author: '',
+    artAuthor: '',
+    atk: 0,
+    hp: 0,
+    costs: [{ type: '', amount: 0 }],
+    values: [{ type: '', amount: 0 }],
+    traits: {
+      contpower: false,
+      cycle: false,
+      handeff: false,
+      myth: false,
+      mythic: false
+    },
+    _id: new ObjectID().toHexString()
+  }
+}
 
 // CardMan is used to seperate out logic for interacting with
 // the CardMaker parent state from it's form children
@@ -15,7 +38,19 @@ class CardManupulator {
   }
 
   public getCardData (): card {
-    return this.stateGetter()
+    return this.stateGetter().card
+  }
+
+  public getArt (): Blob {
+    return this.stateGetter().cardArt
+  }
+
+  public setArt (blob: Blob): void {
+    this.stateSetter({ cardArt: blob })
+  }
+
+  private fetchAndSetArtById (cardId: string): void {
+    // TODO - DB art storage setup
   }
 
   // swap state data out for a new set pulled from the API via id
@@ -25,7 +60,8 @@ class CardManupulator {
       if (data != null && data === '') {
         console.error('failed to change card data.')
       } else {
-        this.stateSetter(data)
+        this.stateSetter({ card: data })
+        this.fetchAndSetArtById(data.id)
         success = true
       }
     }).catch(err => {
@@ -40,7 +76,7 @@ class CardManupulator {
       .then((res) => {
         if (res) {
           success = true
-          this.updateStringField('_id', new ObjectID().toHexString())
+          this.stateSetter({ card: newCard(), cardArt: null })
         }
       })
     return success
@@ -48,15 +84,15 @@ class CardManupulator {
 
   // TODO - might be a way to pass any value in args without the list being locked to readonly. If found, can compress all updates to a single method
   public updateStringField (fieldName: 'name' | '_id' | 'artAuthor' | 'effect' | 'quote', newValue: string): void {
-    const card = this.stateGetter()
+    const card = this.stateGetter().card
     card[fieldName] = newValue
-    this.stateSetter(card)
+    this.stateSetter({ card })
   }
 
   public updateStat (fieldName: 'atk' | 'hp', newValue: number): void {
-    const card = this.stateGetter()
+    const card = this.stateGetter().card
     card[fieldName] = newValue
-    this.stateSetter(card)
+    this.stateSetter({ card })
   }
 
   public updateCostValueField (fieldName: 'costs' | 'values', index: number, type: string | null, amount: number | null): void {
@@ -65,45 +101,46 @@ class CardManupulator {
       return
     }
 
-    const card = this.stateGetter()
+    const card = this.stateGetter().card()
     if (type != null) {
       card[fieldName][index].type = type
     }
     if (amount != null) {
       card[fieldName][index].amount = amount
     }
-    this.stateSetter(card)
+    this.stateSetter({ card })
   }
 
   public addCostValue (fieldName: 'costs' | 'values', newValue: { type: string, amount: 0 }): void {
-    const card = this.stateGetter()
+    const card = this.stateGetter().card()
     card[fieldName].push(newValue)
-    this.stateSetter(card)
+    this.stateSetter({ card })
   }
 
   public removeCostValue (fieldName: 'costs' | 'values', index: number): void {
-    const card = this.stateGetter()
+    const card = this.stateGetter().card()
     card[fieldName].splice(index - 1, 1)
-    this.stateSetter(card)
+    this.stateSetter({ card })
   }
 
   public updateCardType (type: cardType): void {
-    const card = this.stateGetter()
+    const card = this.stateGetter().card()
     card.cardType = type
-    this.stateSetter(card)
+    this.stateSetter({ card })
   }
 
   public updateTrait (trait: cardTrait, newBool: boolean): void {
-    const card = this.stateGetter()
+    const card = this.stateGetter().card()
     card.traits[trait] = newBool
-    this.stateSetter(card)
+    this.stateSetter({ card })
   }
 
-  public setFromFile (file: Blob): void {
+  // TODO store art in saved json, and read here
+  public setCardFromFile (file: Blob): void {
     const reader = new FileReader()
 
     reader.addEventListener('load', () => {
-      this.stateSetter(JSON.parse(String(reader.result)))
+      this.stateSetter({ card: JSON.parse(String(reader.result)) })
     })
 
     reader.addEventListener('error', err => {

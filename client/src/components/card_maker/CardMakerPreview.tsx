@@ -19,7 +19,7 @@ class CardMakerPreview extends React.Component<Prop> {
       >
         {/* TODO - character limits for text fields based on canvas */}
         <Center h='100%'>
-          <PreviewCanvas {...this.props} />
+          <PreviewCanvas borderRadiusPx={10} frameHeightPx={626} frameWidthPx={455} {...this.props} />
         </Center>
       </Card>
     )

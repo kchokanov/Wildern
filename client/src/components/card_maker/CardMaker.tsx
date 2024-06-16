@@ -3,13 +3,13 @@ import { Box, Wrap, WrapItem } from '@chakra-ui/react'
 
 import CardMakerForm from './CardMakerForm'
 import CardMakerPreview from './CardMakerPreview'
-import { card, cardType } from '../../types/card'
-import CardManupulator from '../../CardManupulator'
-import ObjectID from 'bson-objectid'
+import { card } from '../../types/card'
+import CardManupulator, { newCard } from '../../CardManupulator'
 
 interface State {
   card: card
   cardMan: CardManupulator
+  cardArt: Blob | null
 }
 
 class CardMaker extends React.Component<{}, State> {
@@ -21,30 +21,12 @@ class CardMaker extends React.Component<{}, State> {
   }
 
   state: State = {
-    card: {
-      name: '',
-      effect: '',
-      quote: '',
-      cardType: cardType.wildern,
-      author: '',
-      artAuthor: '',
-      atk: 0,
-      hp: 0,
-      costs: [{ type: '', amount: 0 }],
-      values: [{ type: '', amount: 0 }],
-      traits: {
-        contpower: false,
-        cycle: false,
-        handeff: false,
-        myth: false,
-        mythic: false
-      },
-      _id: new ObjectID().toHexString()
-    },
+    card: newCard(),
     cardMan: new CardManupulator(
-      () => { return this.state.card },
-      (data: card) => { this.setState({ card: data }) }
-    )
+      () => { return this.state },
+      (data: any) => { this.setState(data) }
+    ),
+    cardArt: null
   }
 
   render (): React.JSX.Element {
@@ -53,7 +35,7 @@ class CardMaker extends React.Component<{}, State> {
         <Wrap w='100%' justify='center' pt='1rem' pb='1rem' spacing='2rem'>
           <WrapItem alignContent='center'>
             <Box minW='30rem'>
-              <CardMakerPreview />
+              <CardMakerPreview cardMan={this.state.cardMan} />
             </Box>
           </WrapItem>
           <WrapItem alignContent='center'>

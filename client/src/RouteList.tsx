@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import React from 'react'
 
 import Home from './components/Home'
-import CardMaker from './components/CardMaker/CardMaker'
+import CardMaker from './components/card_maker/CardMaker'
 import NoRoute from './components/NoRoute'
 import InProgress from './components/InProgress'
 

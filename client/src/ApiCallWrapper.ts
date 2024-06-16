@@ -23,6 +23,16 @@ function base64ToBlob (base64String: string, blobType: string): Blob {
   return new Blob([new Uint8Array(byteNumbers)], { type: blobType })
 }
 
+async function blobToBase64 (blob: Blob): Promise<string | null> {
+  const reader = new FileReader()
+  reader.readAsDataURL(blob)
+  return await new Promise(resolve => {
+    reader.onloadend = () => {
+      resolve(String(reader.result))
+    }
+  })
+}
+
 export async function fetchCardbyId (id: string): Promise<null | card> {
   let data = null
   await axios.get(`${String(process.env.API_URL)}/api/fetchcard`, {
@@ -86,7 +96,6 @@ export async function postCard (data: card): Promise<boolean> {
     console.error('Attempted upload with no name set.')
     return success
   }
-
   await fetchCardbyName(data.name).then(async (compareData: any) => {
     if (compareData !== '' && data._id !== compareData._id) {
       console.error('Found card with different ID, but same name.')
@@ -110,7 +119,11 @@ export async function postTributeType (name: string): Promise<boolean> {
     console.error('Attempted upload with no name set.')
     return success
   }
-  const data: tribute = { name, _id: new ObjectID().toHexString() }
+  const data: tribute = {
+    name, 
+    _id: new ObjectID().toHexString(),
+    thumbnail: null
+  }
 
   await axios.post(`${String(process.env.API_URL)}/api/savevalue`, data)
     .then(() => {
@@ -119,24 +132,4 @@ export async function postTributeType (name: string): Promise<boolean> {
       console.error(error)
     })
   return success
-}
-
-export async function getImage (fileName: string): Promise<null | Blob> {
-  let data = null
-
-  if (isDataBlank(fileName)) {
-    console.error('No file name in get attempt.')
-    return data
-  }
-
-  await axios.get(`${String(process.env.API_URL)}/api/getimg`, {
-    params: {
-      file: fileName
-    }
-  }).then(res => {
-    data = base64ToBlob(res.data, 'image/png')
-  }).catch(err => {
-    console.error(err)
-  })
-  return data
 }

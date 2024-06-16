@@ -16,6 +16,7 @@ interface State {
   displayPopUp: boolean
 }
 
+// TODO - need parent component for api requests so we don't have double the amount
 class TributeSelect extends React.Component<Prop, State> {
   constructor (props: {
     cardMan: CardManupulator

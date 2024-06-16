@@ -1,19 +1,19 @@
 import React from 'react'
 import { Box, Card, Center, HStack, Spacer, Wrap, WrapItem } from '@chakra-ui/react'
-import CardNameInput from './Form/CardNameInput'
+import CardNameInput from './form_components/CardNameInput'
 import CardManupulator from '../../CardManupulator'
-import CardSearchBar from './Form/CardSearchBar'
-import LoadLocalFileButton from './Form/LoadLocalFileButton'
-import CardTypeSelect from './Form/CardTypeSelect'
-import TraitCheckboxGroup from './Form/TraitCheckboxGroup'
-import DownloadCardAsJsonButton from './Form/DownloadCardAsJsonButton'
-import UploadCardButton from './Form/UploadCardButton'
-import TributeField from './Form/TributeField'
-import StatsInput from './Form/StatsInput'
+import CardSearchBar from './form_components/CardSearchBar'
+import LoadLocalFileButton from './form_components/LoadLocalFileButton'
+import CardTypeSelect from './form_components/CardTypeSelect'
+import TraitCheckboxGroup from './form_components/TraitCheckboxGroup'
+import DownloadCardAsJsonButton from './form_components/DownloadCardAsJsonButton'
+import UploadCardButton from './form_components/UploadCardButton'
+import TributeField from './form_components/TributeField'
+import StatsInput from './form_components/StatsInput'
+import ArtUpload from './form_components/ArtUpload'
+import EffectInput from './form_components/EffectInput'
+import QuoteInput from './form_components/QuoteInput'
 import { cardType } from '../../types/card'
-import ArtUpload from './Form/ArtUpload'
-import EffectInput from './Form/EffectInput'
-import QuoteInput from './Form/QuoteInput'
 
 interface Prop {
   cardMan: CardManupulator
@@ -34,7 +34,7 @@ class CardMakerForm extends React.Component<Prop> {
 
   loadFile (target: HTMLInputElement): void {
     if (target.files != null) {
-      this.props.cardMan.setFromFile(target.files[0])
+      this.props.cardMan.setCardFromFile(target.files[0])
     }
   }
 
