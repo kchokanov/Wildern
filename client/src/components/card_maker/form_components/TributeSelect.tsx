@@ -1,5 +1,5 @@
 import React from 'react'
-import CardManupulator from '../../../CardManupulator'
+import CardManupulator from '../../../cardManipulator'
 import { Box, Portal, Select } from '@chakra-ui/react'
 import NewTributePopUp from './NewTributePopUp'
 import { tribute } from '../../../types/tribute'

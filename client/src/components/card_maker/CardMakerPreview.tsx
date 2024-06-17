@@ -1,6 +1,6 @@
 import React from 'react'
 import { Center, Card } from '@chakra-ui/react'
-import CardManupulator from '../../CardManupulator'
+import CardManupulator from '../../cardManipulator'
 
 const PreviewCanvas = React.lazy(async () => await import('./PreviewCanvas'))
 

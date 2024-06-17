@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Wrap, WrapItem } from '@chakra-ui/react'
 import { card } from '../../types/card'
-import CardManupulator, { newCard } from '../../CardManupulator'
+import CardManupulator, { newCard } from '../../cardManipulator'
 
 const CardMakerForm = React.lazy(async () => await import('./CardMakerForm'))
 const CardMakerPreview = React.lazy(async () => await import('./CardMakerPreview'))

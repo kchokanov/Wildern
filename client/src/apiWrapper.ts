@@ -9,7 +9,8 @@ if(API_URL == null){
   console.error('No API URL found.')
 }
 
-// TODO - validate all
+
+//----- Validation methods -----//
 function isDataBlank (data: any): boolean {
   if (data == null) {
     return true
@@ -20,6 +21,8 @@ function isDataBlank (data: any): boolean {
   return false
 }
 
+
+//----- Conversion methods -----//
 function base64ToBlob (base64String: string, blobType: string): Blob {
   const byteCharacters = atob(base64String)
   const byteNumbers = new Array(byteCharacters.length)
@@ -39,9 +42,12 @@ async function blobToBase64 (blob: Blob): Promise<string | null> {
   })
 }
 
-export async function fetchCardbyId (id: string): Promise<null | card> {
+//----- API calls -----//
+
+// Request to fetch card entry by Id
+export async function getCardById (id: string): Promise<null | card> {
   let data = null
-  await axios.get(`${API_URL}/api/fetchcard`, {
+  await axios.get(`${API_URL}/api/card`, {
     params: {
       _id: id
     }
@@ -53,13 +59,13 @@ export async function fetchCardbyId (id: string): Promise<null | card> {
   return data
 }
 
-// TODO - function overload could be implemented for this and id search,
-// but need to figure out a way to not get the args confused, since both are string
-export async function fetchCardbyName (name: string): Promise<null | card> {
+// Request to fetch card entry by name
+// TODO - consider overload for this and Id search
+export async function getCardByName (name: string): Promise<null | card> {
   let data = null
-  await axios.get(`${API_URL}/api/fetchcard`, {
+  await axios.get(`${API_URL}/api/card`, {
     params: {
-      name
+      name: name
     }
   }).then(res => {
     data = res.data
@@ -69,9 +75,10 @@ export async function fetchCardbyName (name: string): Promise<null | card> {
   return data
 }
 
-export async function fetchCardListByNameMatch (searchQueryStr: string): Promise<null | Array<{ name: string, _id: string }>> {
+// Request to get all card names matching query string
+export async function getMathingNames (searchQueryStr: string): Promise<null | Array<{ name: string, _id: string }>> {
   let list: [] | null = []
-  await axios.get(`${API_URL}/api/fetchcardnames`, {
+  await axios.get(`${API_URL}/api/searchcard`, {
     params: {
       searchQueryStr
     }
@@ -84,9 +91,10 @@ export async function fetchCardListByNameMatch (searchQueryStr: string): Promise
   return list
 }
 
-export async function fetchTributeTypes (): Promise<null | tribute[]> {
+// Request to get all tribute entries
+export async function getAllTributes (): Promise<null | tribute[]> {
   let list: [] | null = []
-  await axios.get(`${API_URL}/api/allvalue`)
+  await axios.get(`${API_URL}/api/alltribute`)
     .then(res => {
       list = res.data
     }).catch(err => {
@@ -95,6 +103,7 @@ export async function fetchTributeTypes (): Promise<null | tribute[]> {
   return list
 }
 
+// Request to write or update card entry
 export async function postCard (data: card): Promise<boolean> {
   let success = false
 
@@ -102,7 +111,7 @@ export async function postCard (data: card): Promise<boolean> {
     console.error('Attempted upload with no name set.')
     return success
   }
-  await fetchCardbyName(data.name).then(async (compareData: any) => {
+  await getCardByName(data.name).then(async (compareData: any) => {
     if (compareData !== '' && data._id !== compareData._id) {
       console.error('Found card with different ID, but same name.')
     } else {
@@ -118,7 +127,9 @@ export async function postCard (data: card): Promise<boolean> {
   return success
 }
 
-export async function postTributeType (name: string): Promise<boolean> {
+// Request to write new tribute entry
+// TODO add image
+export async function postTribute (name: string): Promise<boolean> {
   let success = false
 
   if (isDataBlank(name)) {
@@ -131,7 +142,7 @@ export async function postTributeType (name: string): Promise<boolean> {
     thumbnail: null
   }
 
-  await axios.post(`${API_URL}api/savevalue`, data)
+  await axios.post(`${API_URL}api/savetribute`, data)
     .then(() => {
       success = true
     }).catch(function (error) {

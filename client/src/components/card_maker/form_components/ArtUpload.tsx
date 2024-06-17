@@ -1,5 +1,5 @@
 import React from 'react'
-import CardManupulator from '../../../CardManupulator'
+import CardManupulator from '../../../cardManipulator'
 import { HStack, Input } from '@chakra-ui/react'
 import LoadLocalFileButton from './LoadLocalFileButton'
 

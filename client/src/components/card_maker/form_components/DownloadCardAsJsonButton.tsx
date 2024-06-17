@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react'
 import React from 'react'
-import CardManupulator from '../../../CardManupulator'
+import CardManupulator from '../../../cardManipulator'
 import { card } from '../../../types/card'
 
 interface Prop {

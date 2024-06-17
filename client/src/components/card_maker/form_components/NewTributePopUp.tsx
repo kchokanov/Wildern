@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Button, Card, Center, Divider, HStack, Input, Text } from '@chakra-ui/react'
 import { IoMdCloseCircleOutline } from 'react-icons/io'
-import { postTributeType } from '../../../ApiCallWrapper'
+import { postTribute } from '../../../apiWrapper'
 
 interface Prop {
   displayPopUp: boolean
@@ -19,7 +19,7 @@ class NewTributePopUp extends React.Component<Prop, State> {
   }
 
   submitTribute (): void {
-    postTributeType(this.state.newTribute).then(res => {
+    postTribute(this.state.newTribute).then(res => {
       if (res) {
         // TODO - success toast
         console.log('Uploaded Tribute')

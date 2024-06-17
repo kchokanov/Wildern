@@ -1,6 +1,6 @@
 import { Box, Divider, Input, Text } from '@chakra-ui/react'
 import React from 'react'
-import CardManupulator from '../../../CardManupulator'
+import CardManupulator from '../../../cardManipulator'
 
 interface Prop {
   cardMan: CardManupulator

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, Input, InputGroup, InputLeftElement, Text, VStack } from '@chakra-ui/react'
 import { FaSearch } from 'react-icons/fa'
-import { fetchCardListByNameMatch } from '../../../ApiCallWrapper'
-import CardManupulator from '../../../CardManupulator'
+import { getMathingNames } from '../../../apiWrapper'
+import CardManupulator from '../../../cardManipulator'
 
 interface Prop {
   cardMan: CardManupulator
@@ -22,7 +22,7 @@ class CardSearchBar extends React.Component<Prop> {
   }
 
   doSearch (): void {
-    fetchCardListByNameMatch(this.state.searchQuery).then((data) => {
+    getMathingNames(this.state.searchQuery).then((data) => {
       if (data != null) {
         this.setState({ searchResults: data })
       } else {

@@ -1,7 +1,7 @@
 import { Text, Input, VStack, Box, Divider, Card, HStack } from '@chakra-ui/react'
 import React from 'react'
 import { GiBorderedShield, GiBroadsword } from 'react-icons/gi'
-import CardManupulator from '../../../CardManupulator'
+import CardManupulator from '../../../cardManipulator'
 
 interface Prop {
   cardMan: CardManupulator

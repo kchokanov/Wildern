@@ -1,7 +1,8 @@
 import ObjectID from 'bson-objectid'
-import { fetchCardbyId, postCard } from './ApiCallWrapper'
+import { getCardById, postCard } from './apiWrapper'
 import { card, cardType, cardTrait } from './types/card'
 
+// Used to create initial card entry and to reset it
 export function newCard (): card {
   return {
     name: '',
@@ -25,9 +26,8 @@ export function newCard (): card {
   }
 }
 
-// CardMan is used to seperate out logic for interacting with
-// the CardMaker parent state from it's form children
-// using a passed getter and setter for the state contents
+// CardMan is a class for interacting with the main Card Maker component state.
+// It allows for controlled interaction of components with said state, when passed as a prop.
 class CardManupulator {
   private readonly stateGetter: Function
   private readonly stateSetter: Function
@@ -49,19 +49,19 @@ class CardManupulator {
     this.stateSetter({ cardArt: blob })
   }
 
-  private fetchAndSetArtById (cardId: string): void {
+  private getAndSetArtById (cardId: string): void {
     // TODO - DB art storage setup
   }
 
-  // swap state data out for a new set pulled from the API via id
+  // Swap state data out for a new set pulled from the API via id
   public async changeToNewCardById (id: string): Promise<boolean> {
     let success = false
-    await fetchCardbyId(id).then((data: any) => {
+    await getCardById(id).then((data: any) => {
       if (data != null && data === '') {
         console.error('failed to change card data.')
       } else {
         this.stateSetter({ card: data })
-        this.fetchAndSetArtById(data.id)
+        this.getAndSetArtById(data.id)
         success = true
       }
     }).catch(err => {
@@ -70,8 +70,10 @@ class CardManupulator {
     return success
   }
 
+  // Post card data and reset local data if successful
   public async saveCard (): Promise<boolean> {
     let success = false
+    //TODO - post art seperatly
     await postCard(this.getCardData())
       .then((res) => {
         if (res) {
@@ -82,7 +84,6 @@ class CardManupulator {
     return success
   }
 
-  // TODO - might be a way to pass any value in args without the list being locked to readonly. If found, can compress all updates to a single method
   public updateStringField (fieldName: 'name' | '_id' | 'artAuthor' | 'effect' | 'quote', newValue: string): void {
     const card = this.stateGetter().card
     card[fieldName] = newValue
@@ -101,7 +102,7 @@ class CardManupulator {
       return
     }
 
-    const card = this.stateGetter().card()
+    const card = this.stateGetter().card
     if (type != null) {
       card[fieldName][index].type = type
     }
@@ -112,25 +113,25 @@ class CardManupulator {
   }
 
   public addCostValue (fieldName: 'costs' | 'values', newValue: { type: string, amount: 0 }): void {
-    const card = this.stateGetter().card()
+    const card = this.stateGetter().card
     card[fieldName].push(newValue)
     this.stateSetter({ card })
   }
 
   public removeCostValue (fieldName: 'costs' | 'values', index: number): void {
-    const card = this.stateGetter().card()
+    const card = this.stateGetter().card
     card[fieldName].splice(index - 1, 1)
     this.stateSetter({ card })
   }
 
   public updateCardType (type: cardType): void {
-    const card = this.stateGetter().card()
+    const card = this.stateGetter().card
     card.cardType = type
     this.stateSetter({ card })
   }
 
   public updateTrait (trait: cardTrait, newBool: boolean): void {
-    const card = this.stateGetter().card()
+    const card = this.stateGetter().card
     card.traits[trait] = newBool
     this.stateSetter({ card })
   }
@@ -146,7 +147,7 @@ class CardManupulator {
     reader.addEventListener('error', err => {
       console.error(err)
     })
-    // TODO - no idea how to check if this succeeds
+    // TODO - onload check if successful
     reader.readAsText(file)
   }
 }

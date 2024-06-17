@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Card, Center, HStack, Spacer, Wrap, WrapItem } from '@chakra-ui/react'
-import CardManupulator from '../../CardManupulator'
+import CardManupulator from '../../cardManipulator'
 import { cardType } from '../../types/card'
 
 const CardNameInput = React.lazy(async () => await import('./form_components/CardNameInput'))

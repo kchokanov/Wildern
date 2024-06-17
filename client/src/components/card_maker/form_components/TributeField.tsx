@@ -1,9 +1,9 @@
 import React from 'react'
-import CardManupulator from '../../../CardManupulator'
+import CardManupulator from '../../../cardManipulator'
 import { HStack, Input, Text, Box, Divider, Card } from '@chakra-ui/react'
 import TributeSelect from './TributeSelect'
 import { tribute } from '../../../types/tribute'
-import { fetchTributeTypes } from '../../../ApiCallWrapper'
+import { getAllTributes } from '../../../apiWrapper'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 
 interface Prop {
@@ -31,15 +31,18 @@ class TributeField extends React.Component<Prop> {
     fieldCount: number
   }) {
     super(props)
-    // TODO - find cleaner way to populate list on start
-    this.updateList()
+
     // binding magic so JS doesn't forget the set function exists when it's passed to child component
     this.updateList = this.updateList.bind(this)
   }
 
+  componentDidMount(): void {
+    this.updateList()
+  }
+
   async getTributeList (): Promise<tribute[]> {
     let list: tribute[] = new Array<tribute>()
-    await fetchTributeTypes().then(fetchedList => {
+    await getAllTributes().then(fetchedList => {
       if (fetchedList != null) {
         list = fetchedList
       } else {
@@ -69,9 +72,7 @@ class TributeField extends React.Component<Prop> {
     if (!Number.isNaN(parseInt(newAmout))) {
       this.props.cardMan.updateCostValueField(this.props.type, index, null, Number(newAmout))
     } else {
-      console.error('Attempted to set type amount to NaN')
       this.props.cardMan.updateCostValueField(this.props.type, index, null, Number(0))
-      // TODO - error toast
     }
   }
 

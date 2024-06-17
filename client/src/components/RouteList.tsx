@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import React, { Suspense } from 'react'
 import LoadingSpinner from './LoadingSpinner'
-import { Box } from '@chakra-ui/react'
 
 const Home = React.lazy(async () => await import('./Home'))
 const CardMaker = React.lazy(async () => await import('./card_maker/CardMaker'))

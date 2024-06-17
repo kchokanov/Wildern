@@ -1,5 +1,5 @@
 import React from 'react'
-import CardManupulator from '../../CardManupulator'
+import CardManupulator from '../../cardManipulator'
 import { Box } from '@chakra-ui/react'
 import { card } from '../../types/card'
 import baseFrame from 'CardDisplay/frame_1.gif'
