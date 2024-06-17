@@ -9,7 +9,12 @@ module.exports = {
     rules: [
       {
         test: /\.(js|tsx|ts)$/i,
-        use: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true
+          }
+        },
         exclude: /node_modules/
       },
       {
@@ -36,11 +41,10 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'bundle.js',
+    filename: '[name].[chunkhash].js',
     publicPath: '/',
     clean: true
   },
-  target: 'web',
   devServer: {
     port: '5000',
     static: {
@@ -57,5 +61,4 @@ module.exports = {
       template: path.join(__dirname, './public', 'index.html')
     })
   ]
-
 }

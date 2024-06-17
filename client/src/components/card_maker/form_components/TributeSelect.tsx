@@ -51,7 +51,7 @@ class TributeSelect extends React.Component<Prop, State> {
   render (): React.JSX.Element {
     const selectOption: React.JSX.Element[] = []
 
-    this.props.tributeTypeList.map((item: { name: string, _id: string }) => {
+    this.props.tributeTypeList.map((item: tribute) => {
       return selectOption.push(
         <option
           key={'select_' + item._id}

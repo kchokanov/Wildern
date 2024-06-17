@@ -20,7 +20,7 @@ interface State {
 
 class TributeField extends React.Component<Prop> {
   state: State = {
-    tributesTypeList: []
+    tributesTypeList: new Array<tribute>()
   }
 
   constructor (props: {
@@ -38,7 +38,7 @@ class TributeField extends React.Component<Prop> {
   }
 
   async getTributeList (): Promise<tribute[]> {
-    let list: tribute[] = []
+    let list: tribute[] = new Array<tribute>()
     await fetchTributeTypes().then(fetchedList => {
       if (fetchedList != null) {
         list = fetchedList

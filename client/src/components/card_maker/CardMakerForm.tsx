@@ -1,19 +1,20 @@
 import React from 'react'
 import { Box, Card, Center, HStack, Spacer, Wrap, WrapItem } from '@chakra-ui/react'
-import CardNameInput from './form_components/CardNameInput'
 import CardManupulator from '../../CardManupulator'
-import CardSearchBar from './form_components/CardSearchBar'
-import LoadLocalFileButton from './form_components/LoadLocalFileButton'
-import CardTypeSelect from './form_components/CardTypeSelect'
-import TraitCheckboxGroup from './form_components/TraitCheckboxGroup'
-import DownloadCardAsJsonButton from './form_components/DownloadCardAsJsonButton'
-import UploadCardButton from './form_components/UploadCardButton'
-import TributeField from './form_components/TributeField'
-import StatsInput from './form_components/StatsInput'
-import ArtUpload from './form_components/ArtUpload'
-import EffectInput from './form_components/EffectInput'
-import QuoteInput from './form_components/QuoteInput'
 import { cardType } from '../../types/card'
+
+const CardNameInput = React.lazy(async () => await import('./form_components/CardNameInput'))
+const CardSearchBar = React.lazy(async () => await import('./form_components/CardSearchBar'))
+const LoadLocalFileButton = React.lazy(async () => await import('./form_components/LoadLocalFileButton'))
+const CardTypeSelect = React.lazy(async () => await import('./form_components/CardTypeSelect'))
+const TraitCheckboxGroup = React.lazy(async () => await import('./form_components/TraitCheckboxGroup'))
+const DownloadCardAsJsonButton = React.lazy(async () => await import('./form_components/DownloadCardAsJsonButton'))
+const UploadCardButton = React.lazy(async () => await import('./form_components/UploadCardButton'))
+const TributeField = React.lazy(async () => await import('./form_components/TributeField'))
+const StatsInput = React.lazy(async () => await import('./form_components/StatsInput'))
+const ArtUpload = React.lazy(async () => await import('./form_components/ArtUpload'))
+const EffectInput = React.lazy(async () => await import('./form_components/EffectInput'))
+const QuoteInput = React.lazy(async () => await import('./form_components/QuoteInput'))
 
 interface Prop {
   cardMan: CardManupulator

@@ -3,6 +3,12 @@ import { card } from './types/card'
 import { tribute } from './types/tribute'
 import ObjectID from 'bson-objectid'
 
+const API_URL: string | undefined = process.env.NODE_ENV === 'development' ? process.env.API_URL_DEV : process.env.API_URL_PROD
+
+if(API_URL == null){
+  console.error('No API URL found.')
+}
+
 // TODO - validate all
 function isDataBlank (data: any): boolean {
   if (data == null) {
@@ -35,7 +41,7 @@ async function blobToBase64 (blob: Blob): Promise<string | null> {
 
 export async function fetchCardbyId (id: string): Promise<null | card> {
   let data = null
-  await axios.get(`${String(process.env.API_URL)}/api/fetchcard`, {
+  await axios.get(`${API_URL}/api/fetchcard`, {
     params: {
       _id: id
     }
@@ -51,7 +57,7 @@ export async function fetchCardbyId (id: string): Promise<null | card> {
 // but need to figure out a way to not get the args confused, since both are string
 export async function fetchCardbyName (name: string): Promise<null | card> {
   let data = null
-  await axios.get(`${String(process.env.API_URL)}/api/fetchcard`, {
+  await axios.get(`${API_URL}/api/fetchcard`, {
     params: {
       name
     }
@@ -65,7 +71,7 @@ export async function fetchCardbyName (name: string): Promise<null | card> {
 
 export async function fetchCardListByNameMatch (searchQueryStr: string): Promise<null | Array<{ name: string, _id: string }>> {
   let list: [] | null = []
-  await axios.get(`${String(process.env.API_URL)}/api/fetchcardnames`, {
+  await axios.get(`${API_URL}/api/fetchcardnames`, {
     params: {
       searchQueryStr
     }
@@ -80,7 +86,7 @@ export async function fetchCardListByNameMatch (searchQueryStr: string): Promise
 
 export async function fetchTributeTypes (): Promise<null | tribute[]> {
   let list: [] | null = []
-  await axios.get(`${String(process.env.API_URL)}/api/allvalue`)
+  await axios.get(`${API_URL}/api/allvalue`)
     .then(res => {
       list = res.data
     }).catch(err => {
@@ -100,7 +106,7 @@ export async function postCard (data: card): Promise<boolean> {
     if (compareData !== '' && data._id !== compareData._id) {
       console.error('Found card with different ID, but same name.')
     } else {
-      await axios.post(`${String(process.env.API_URL)}/api/savecard`, data)
+      await axios.post(`${API_URL}/api/savecard`, data)
         .then(() => {
           success = true
         }).catch(function (error) {
@@ -120,12 +126,12 @@ export async function postTributeType (name: string): Promise<boolean> {
     return success
   }
   const data: tribute = {
-    name, 
+    name,
     _id: new ObjectID().toHexString(),
     thumbnail: null
   }
 
-  await axios.post(`${String(process.env.API_URL)}/api/savevalue`, data)
+  await axios.post(`${API_URL}api/savevalue`, data)
     .then(() => {
       success = true
     }).catch(function (error) {

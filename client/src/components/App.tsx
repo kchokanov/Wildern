@@ -1,9 +1,8 @@
 import React from 'react'
 import { Box, Flex } from '@chakra-ui/react'
-
-import Footer from './components/Footer'
-import Header from './components/Header'
+import Header from './Header'
 import RouteList from './RouteList'
+import Footer from './Footer'
 
 interface State {
   headerHeightPX: number
@@ -18,7 +17,7 @@ class App extends React.Component<{}, State> {
 
   render (): React.JSX.Element {
     return (
-      <Box w='100%'>
+      <Box w='100%' h='100%'>
         <Header height={`${this.state.headerHeightPX}px`} />
         <Flex w='100%' bg='#EEEBD0' textColor='#673C4F' minH={`calc(100vh - ${this.state.headerHeightPX + this.state.footerHeightPX}px)`}>
           <RouteList />
